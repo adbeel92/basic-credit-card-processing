@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+  SuggestExtensions: false
+
+Security/Eval:
+  Exclude:
+    - main.rb
+
+Metrics/MethodLength:
+  Max: 15

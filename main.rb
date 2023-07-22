@@ -1,19 +1,23 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require './lib/cards_manager'
+require './lib/command_validator'
 
 exit_commands = { 'q' => 'exit', 'q!' => 'exit!' }
 
-print "> "
+print '> '
 input = gets.chomp.strip
 
-while !exit_commands.keys.include?(input)
+manager = CardsManager.new
+
+until exit_commands.keys.include?(input)
   begin
-
-    puts input.chars.inspect
-
-  rescue => exception
-    puts exception
+    puts manager.process_command(input) if CommandValidator.validate(input)
+  rescue StandardError => e
+    puts e
   end
-  print "> "
+  print '> '
 
   input = gets.chomp.strip
 end
