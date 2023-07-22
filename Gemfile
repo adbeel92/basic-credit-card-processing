@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.1.0'
+ruby '3.1.4'
 
 gem 'minitest', '~> 5.14.2'
 gem 'pry', '~> 0.13.1'

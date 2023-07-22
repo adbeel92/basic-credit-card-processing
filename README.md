@@ -6,12 +6,12 @@ Credit card processing exercise developed by Eduardo Arenas
 
 * [RVM](https://rvm.io). RVM with version [1.29.12](https://rvm.io/blog/2021/01/rvm-1-29-12)
 
-* [Ruby](https://www.ruby-lang.org/en/).  Written with version [3.1.0](https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/) - *[docs](https://docs.ruby-lang.org/en/3.1/)*.
+* [Ruby](https://www.ruby-lang.org/en/).  Written with version [3.1.4](https://www.ruby-lang.org/en/news/2023/03/30/ruby-3-1-4-released/) - *[docs](https://docs.ruby-lang.org/en/3.1/)*.
 
 ## Installation
 
 - Install RVM: `\curl -sSL https://get.rvm.io | bash -s 1.29.12`.
-- Run `rvm install ruby-3.1.0` to install ruby 3.1.0
+- Run `rvm install ruby-3.1.4` to install ruby 3.1.4
 - Clone the repository
 - Create a gemset (entering to the directory, the gemset will be created thanks to the files `.ruby-version` and `.ruby-gemset`):
 `cd ./basic-credit-card-processing` 
