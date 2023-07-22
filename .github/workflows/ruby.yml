@@ -12,13 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Ruby 3.1
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 3.1.x
-    - name: Build and test with Rake
+        bundler-cache: true
+    - name: Build
       run: |
         gem install bundler -v 2.4
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+    - name: Run rubocop
+      run: bundle exec rake rubocop
+    - name: Run tests
+      run: bundle exec rake test
