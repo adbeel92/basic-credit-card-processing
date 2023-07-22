@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require './lib/card'
+
 # class: CardsManager
 class CardsManager
   attr_reader :cards
 
-  def initialize
-    @cards = []
+  def initialize(cards = [])
+    @cards = cards
   end
 
   def process_command(command)
@@ -28,20 +30,34 @@ class CardsManager
 
   private
 
-  def add_card(_name, _number, _limit)
-    @cards << OpenStruct.new
-    '# Card added successfully!'
+  def add_card(name, number, limit)
+    card = Card.new(name: name, number: number, limit: limit)
+    print_card_error_messages(card) unless card.valid?
+
+    @cards << card
+    "# Card added successfully! #{card.name} $#{card.balance.to_f}"
   end
 
-  def charge_card(_card, _amount)
-    '# Card charged successfully!'
+  def charge_card(card, amount)
+    print_card_error_messages(card) unless card.charge(amount)
+
+    "# Card charged successfully! #{card.name} $#{card.balance.to_f}"
   end
 
-  def credit_card(_card, _amount)
-    '# Card credited successfully!'
+  def credit_card(card, amount)
+    print_card_error_messages(card) unless card.credit(amount)
+
+    "# Card credited successfully! #{card.name} $#{card.balance.to_f}"
   end
 
-  def find_card_by_name(_name)
-    OpenStruct.new
+  def find_card_by_name(name)
+    card = @cards.detect { |c| c.name.downcase == name.downcase }
+    raise "** Card not found by name: #{name}" if card.nil?
+
+    card
+  end
+
+  def print_card_error_messages(card)
+    raise card.error_messages.join(', ')
   end
 end

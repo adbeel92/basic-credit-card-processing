@@ -3,25 +3,41 @@
 require 'test_helper'
 require_relative '../lib/cards_manager'
 
-# Test validator
+# Test CardsManager
 class CardsManagerTest < Minitest::Test
   def test_add_command
-    manager = CardsManager.new
-    assert_includes(manager.process_command('add Edu 12345 1000.00'), 'Card added successfully!')
+    assert_includes(manager.process_command('add Martin 12345 1000.00'), 'Card added successfully!')
   end
 
   def test_charge_command
-    manager = CardsManager.new
     assert_includes(manager.process_command('charge Edu 300'), 'Card charged successfully!')
+
+    assert_raises(RuntimeError) { manager.process_command('charge anyone 300') }
   end
 
   def test_credit_command
-    manager = CardsManager.new
+    manager.cards.last.charge('100')
     assert_includes(manager.process_command('credit Edu 150'), 'Card credited successfully!')
+
+    assert_raises(RuntimeError) { manager.process_command('credit Nala 300') }
+
+    assert_raises(RuntimeError) { manager.process_command('credit anyone 300') }
   end
 
   def test_extra_commands
-    manager = CardsManager.new
     assert_nil(manager.process_command('any word 150'))
+  end
+
+  private
+
+  def manager
+    @manager ||= CardsManager.new(
+      [
+        Card.new(name: 'John', number: '12345', limit: '1000'),
+        Card.new(name: 'Karina', number: '23456', limit: '2000'),
+        Card.new(name: 'Nala', number: '34567', limit: '3000'),
+        Card.new(name: 'Edu', number: '45678', limit: '4000')
+      ]
+    )
   end
 end
