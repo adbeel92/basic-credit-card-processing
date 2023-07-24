@@ -12,16 +12,16 @@ class CardsManagerTest < Minitest::Test
   def test_charge_command
     assert_includes(manager.process_command('charge Edu 300'), 'Card charged successfully!')
 
-    assert_raises(RuntimeError) { manager.process_command('charge anyone 300') }
+    assert_raises(ArgumentError) { manager.process_command('charge anyone 300') }
   end
 
   def test_credit_command
     manager.cards.last.charge('100')
     assert_includes(manager.process_command('credit Edu 150'), 'Card credited successfully!')
 
-    assert_raises(RuntimeError) { manager.process_command('credit Nala 300') }
+    assert_raises(ArgumentError) { manager.process_command('credit Nala 300') }
 
-    assert_raises(RuntimeError) { manager.process_command('credit anyone 300') }
+    assert_raises(ArgumentError) { manager.process_command('credit anyone 300') }
   end
 
   def test_extra_commands

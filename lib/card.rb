@@ -9,7 +9,7 @@ class Card
     @number = args[:number]
     @limit = args[:limit].to_f if args[:limit]
     @balance = nil
-    @error_messages = []
+    @error_messages = {}
   end
 
   def valid?
@@ -32,7 +32,7 @@ class Card
       return true
     end
 
-    add_error_message("** #{name}: error")
+    add_error_message(:balance, 'is not valid')
   end
 
   private
@@ -40,29 +40,30 @@ class Card
   def name_valid?
     return true unless name && name.empty?
 
-    add_error_message('** Invalid name')
+    add_error_message(:name, 'is not valid')
   end
 
   def number_valid?
     return true unless number && number.empty?
 
-    add_error_message('** Invalid number')
+    add_error_message(:number, 'is not valid')
   end
 
   def limit_valid?
     return true if limit&.positive?
 
-    add_error_message('** Limit must be greater than 0')
+    add_error_message(:limit, 'must be greater than 0')
   end
 
   def balance_valid?
     return true if balance.to_f <= limit
 
-    add_error_message('** Balance could not be more than limit')
+    add_error_message(:balance, 'must not be greater than limit')
   end
 
-  def add_error_message(message)
-    @error_messages << message
+  def add_error_message(attr, message)
+    @error_messages[attr] ||= []
+    @error_messages[attr] << message
     false
   end
 end

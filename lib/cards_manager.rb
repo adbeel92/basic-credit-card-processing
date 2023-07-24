@@ -52,12 +52,12 @@ class CardsManager
 
   def find_card_by_name(name)
     card = @cards.detect { |c| c.name.downcase == name.downcase }
-    raise "** Card not found by name: #{name}" if card.nil?
+    raise ArgumentError, "** Card not found by name: #{name}" if card.nil?
 
     card
   end
 
   def print_card_error_messages(card)
-    raise card.error_messages.join(', ')
+    raise ArgumentError, card.error_messages
   end
 end
