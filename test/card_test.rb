@@ -6,15 +6,15 @@ require_relative '../lib/card'
 # Test Card model
 class CardTest < Minitest::Test
   def test_validate_name
-    card = Card.new(name: 'Edu', number: '1212121212121212', limit: '1000')
+    card = Card.new(name: 'Edu', number: '4539319503436467', limit: '1000')
     assert_equal(card.valid?, true)
 
-    card = Card.new(name: '', number: '1212121212121212', limit: '1000')
+    card = Card.new(name: '', number: '4539319503436467', limit: '1000')
     assert_equal(card.valid?, false)
   end
 
   def test_validate_number
-    card = Card.new(name: 'Edu', number: '1212121212121212', limit: '1000')
+    card = Card.new(name: 'Edu', number: '4539319503436467', limit: '1000')
     assert_equal(card.valid?, true)
 
     card = Card.new(name: 'Edu', number: '', limit: '1000')
@@ -22,10 +22,10 @@ class CardTest < Minitest::Test
   end
 
   def test_validate_limit
-    card = Card.new(name: 'Edu', number: '1212121212121212', limit: '1000')
+    card = Card.new(name: 'Edu', number: '4539319503436467', limit: '1000')
     assert_equal(card.valid?, true)
 
-    card = Card.new(name: 'Edu', number: '1212121212121212', limit: '0')
+    card = Card.new(name: 'Edu', number: '4539319503436467', limit: '0')
     assert_equal(card.valid?, false)
   end
 

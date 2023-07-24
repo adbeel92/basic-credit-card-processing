@@ -6,7 +6,7 @@ class CommandValidator
 
   class << self
     def validate(command)
-      return if command.empty?
+      return false if command.empty?
 
       inputs = command.split
 

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../lib/card_number_validator'
+
 # class: Card
 class Card
   attr_reader :name, :number, :limit, :balance, :error_messages
@@ -44,7 +46,7 @@ class Card
   end
 
   def number_valid?
-    return true unless number && number.empty?
+    return true if number && !number.empty? && CardNumberValidator.validate(number)
 
     add_error_message(:number, 'is not valid')
   end
