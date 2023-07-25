@@ -32,10 +32,9 @@ class CardsManager
 
   def add_card(name, number, limit)
     card = Card.new(name: name, number: number, limit: limit)
-    print_card_error_messages(card) unless card.valid?
-
+    card.valid?
     @cards << card
-    "# Card added successfully! #{card.name} $#{card.balance.to_f}"
+    '# Card added!'
   end
 
   def charge_card(card, amount)

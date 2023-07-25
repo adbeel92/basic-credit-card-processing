@@ -6,8 +6,8 @@ require_relative '../lib/cards_manager'
 # Test CardsManager
 class CardsManagerTest < Minitest::Test
   def test_add_command
-    assert_includes(manager.process_command('Add Tom 4111111111111111 $1500'), 'Card added successfully!')
-    assert_includes(manager.process_command('add Martin 4539319503436467 $1000'), 'Card added successfully!')
+    assert_includes(manager.process_command('Add Tom 4111111111111111 $1500'), 'Card added!')
+    assert_includes(manager.process_command('add Martin 4539319503436467 $1000'), 'Card added!')
   end
 
   def test_charge_command
