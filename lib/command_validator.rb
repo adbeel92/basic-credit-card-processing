@@ -5,27 +5,27 @@ class CommandValidator
   ALLOWED_PARAMETER_ACTIONS = { 'add' => 4, 'charge' => 3, 'credit' => 3 }.freeze
 
   class << self
-    def validate(command)
-      return false if command.empty?
+    def filter_valid_command_lines(command)
+      command.split("\n").select do |command_line|
+        validate_command_line(command_line)
+      end
+    end
 
-      inputs = command.split
+    def validate_command_line(command_line)
+      return false if command_line.empty?
 
-      validate_action(inputs[0])
-      validate_parameters(inputs)
+      inputs = command_line.split
+      action_valid?(inputs[0]) && parameters_valid?(inputs)
     end
 
     private
 
-    def validate_action(action)
-      return true if ALLOWED_PARAMETER_ACTIONS.keys.include?(action.downcase)
-
-      raise "Invalid action: `#{action}`"
+    def action_valid?(action)
+      ALLOWED_PARAMETER_ACTIONS.keys.include?(action.downcase)
     end
 
-    def validate_parameters(inputs)
-      return true if ALLOWED_PARAMETER_ACTIONS[inputs[0].downcase] == inputs.size
-
-      raise 'Invalid input parameters'
+    def parameters_valid?(inputs)
+      ALLOWED_PARAMETER_ACTIONS[inputs[0].downcase] == inputs.size
     end
   end
 end

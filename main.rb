@@ -5,7 +5,7 @@ require './lib/cards_manager'
 require './lib/command_validator'
 
 def obtain_input
-  gets.chomp.strip
+  STDIN.gets.chomp.strip
 end
 
 exit_commands = { 'q' => 'exit', 'q!' => 'exit!' }
@@ -17,10 +17,13 @@ manager = CardsManager.new
 
 until exit_commands.keys.include?(input)
   begin
-    if CommandValidator.validate(input)
-      manager.process_command(input)
-      manager.print_cards
+    valid_command_lines = CommandValidator.filter_valid_command_lines(input)
+
+    valid_command_lines.each do |command_line|
+      manager.process_command(command_line)
     end
+
+    manager.print_cards
   rescue StandardError => e
     puts e
   end
