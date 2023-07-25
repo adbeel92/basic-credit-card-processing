@@ -7,11 +7,11 @@ class CommandValidator
   class << self
     def filter_valid_command_lines(command)
       command.split("\n").select do |command_line|
-        validate_command_line(command_line)
+        command_line_valid?(command_line)
       end
     end
 
-    def validate_command_line(command_line)
+    def command_line_valid?(command_line)
       return false if command_line.empty?
 
       inputs = command_line.split
