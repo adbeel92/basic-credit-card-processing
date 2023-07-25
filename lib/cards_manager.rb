@@ -28,25 +28,32 @@ class CardsManager
     end
   end
 
+  def print_cards
+    cards.sort_by(&:name).each { |card| print_card(card) }
+  end
+
+  def print_card(card)
+    puts card.to_s
+  end
+
+  def print_card_error_messages(card)
+    raise ArgumentError, card.error_messages
+  end
+
   private
 
   def add_card(name, number, limit)
     card = Card.new(name: name, number: number, limit: limit)
     card.valid?
     @cards << card
-    '# Card added!'
   end
 
   def charge_card(card, amount)
-    print_card_error_messages(card) unless card.charge(amount)
-
-    "# Card charged successfully! #{card.name} $#{card.balance.to_f}"
+    card.charge(amount)
   end
 
   def credit_card(card, amount)
-    print_card_error_messages(card) unless card.credit(amount)
-
-    "# Card credited successfully! #{card.name} $#{card.balance.to_f}"
+    card.credit(amount)
   end
 
   def find_card_by_name(name)
@@ -54,9 +61,5 @@ class CardsManager
     raise ArgumentError, "** Card not found by name: #{name}" if card.nil?
 
     card
-  end
-
-  def print_card_error_messages(card)
-    raise ArgumentError, card.error_messages
   end
 end

@@ -10,7 +10,7 @@ class Card
     @name = args[:name].capitalize if args[:name]
     @number = args[:number]
     @limit = args[:limit].to_s.gsub('$', '').to_f if args[:limit]
-    @balance = nil
+    @balance = 0
     @error_messages = {}
   end
 
@@ -18,23 +18,28 @@ class Card
     name_valid? && number_valid? && limit_valid? && balance_valid?
   end
 
+  def to_s
+    "#{name}: #{balance_detail}"
+  end
+
+  def balance_detail
+    valid? ? "$#{balance}" : 'error'
+  end
+
   def charge(amount)
-    @balance ||= 0
+    return unless valid?
+
     bal = @balance
     @balance += amount.to_s.gsub('$', '').to_f
-
-    return true if balance_valid?
+    return @balance if balance_valid?
 
     @balance = bal
   end
 
   def credit(amount)
-    if balance
-      @balance -= amount.to_s.gsub('$', '').to_f
-      return true
-    end
+    return unless valid?
 
-    add_error_message(:balance, 'is not valid')
+    @balance -= amount.to_s.gsub('$', '').to_f
   end
 
   private

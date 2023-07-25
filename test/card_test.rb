@@ -30,19 +30,19 @@ class CardTest < Minitest::Test
   end
 
   def test_charge_card
-    card = Card.new(name: 'John', number: '12345', limit: '$1000')
+    card = Card.new(name: 'John', number: '4539319503436467', limit: '$1000')
     card.charge('$333')
-    assert_equal(card.balance, 333.0)
+    assert_equal(card.balance, 333)
     card.charge('$111')
-    assert_equal(card.balance, 444.0)
+    assert_equal(card.balance, 444)
   end
 
   def test_credit_card
-    card = Card.new(name: 'John', number: '12345', limit: '$1000')
+    card = Card.new(name: 'John', number: '4539319503436467', limit: '$1000')
     card.credit('$333')
-    assert_nil(card.balance)
+    assert_equal(card.balance, -333)
     card.charge('$500')
-    card.credit('$555')
-    assert_equal(card.balance, -55.0)
+    card.credit('$55')
+    assert_equal(card.balance, 112)
   end
 end
