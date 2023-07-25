@@ -9,7 +9,7 @@ class Card
   def initialize(args)
     @name = args[:name].capitalize if args[:name]
     @number = args[:number]
-    @limit = args[:limit].to_f if args[:limit]
+    @limit = args[:limit].to_s.gsub('$', '').to_f if args[:limit]
     @balance = nil
     @error_messages = {}
   end
@@ -21,7 +21,7 @@ class Card
   def charge(amount)
     @balance ||= 0
     bal = @balance
-    @balance += amount.to_f
+    @balance += amount.to_s.gsub('$', '').to_f
 
     return true if balance_valid?
 
@@ -30,7 +30,7 @@ class Card
 
   def credit(amount)
     if balance
-      @balance -= amount.to_f
+      @balance -= amount.to_s.gsub('$', '').to_f
       return true
     end
 
@@ -46,7 +46,7 @@ class Card
   end
 
   def number_valid?
-    return true if number && !number.empty? && CardNumberValidator.validate(number)
+    return true if number && !number.empty? && number.length <= 19 && CardNumberValidator.validate(number)
 
     add_error_message(:number, 'is not valid')
   end
