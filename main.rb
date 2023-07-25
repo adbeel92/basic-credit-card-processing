@@ -4,10 +4,14 @@
 require './lib/cards_manager'
 require './lib/command_validator'
 
+def get_input
+  gets.chomp.strip
+end
+
 exit_commands = { 'q' => 'exit', 'q!' => 'exit!' }
 
 print '> '
-input = gets.chomp.strip
+input = get_input
 
 manager = CardsManager.new
 
@@ -19,7 +23,7 @@ until exit_commands.keys.include?(input)
   end
   print '> '
 
-  input = gets.chomp.strip
+  input = get_input
 end
 
 eval(exit_commands[input])

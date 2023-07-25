@@ -14,7 +14,7 @@ class CardsManager
     inputs = command.split
     action = inputs[0]
     name = inputs[1]
-    case action
+    case action.downcase
     when 'add'
       number = inputs[2]
       limit = inputs[3]

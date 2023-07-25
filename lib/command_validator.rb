@@ -17,13 +17,13 @@ class CommandValidator
     private
 
     def validate_action(action)
-      return true if ALLOWED_PARAMETER_ACTIONS.keys.include?(action)
+      return true if ALLOWED_PARAMETER_ACTIONS.keys.include?(action.downcase)
 
       raise "Invalid action: `#{action}`"
     end
 
     def validate_parameters(inputs)
-      return true if ALLOWED_PARAMETER_ACTIONS[inputs[0]] == inputs.size
+      return true if ALLOWED_PARAMETER_ACTIONS[inputs[0].downcase] == inputs.size
 
       raise 'Invalid input parameters'
     end
