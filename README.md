@@ -25,9 +25,9 @@ Credit card processing exercise developed by Eduardo Arenas
 
   - Using the command-line (STDIN), run `ruby main.rb`
     - loading a filename, write `# > input.txt`
-    - add a new card with single command-line, write `add name valid-card-number $1000`
-    - charge an amount to a name, write `charge name $123`
-    - credit an amount to a name, write `credit name $123`
+    - add a new card with single command-line, write `add name type valid-card-number $1000`
+    - charge an amount to a name, write `charge name type $123`
+    - credit an amount to a name, write `credit name type $123`
     - press `q` or `q!` to exit
 
 * Run: `rake` or `bundle exec rake` to run the rubocop and tests.
