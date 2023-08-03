@@ -6,7 +6,7 @@ require './lib/card'
 class CardsManager
   attr_reader :cards
 
-  def initialize(cards = [])
+  def initialize(cards = {})
     @cards = cards
   end
 
@@ -14,22 +14,26 @@ class CardsManager
     inputs = command.split
     action = inputs[0]
     name = inputs[1]
+    type = inputs[2]
     case action.downcase
     when 'add'
-      number = inputs[2]
-      limit = inputs[3]
-      add_card(name, number, limit)
+      number = inputs[3]
+      limit = inputs[4]
+      add_card(name, type, number, limit)
     when 'charge'
-      amount = inputs[2]
-      charge_card(find_card_by_name(name), amount)
+      amount = inputs[3]
+      charge_card(find_card_by_name_and_type(name, type), amount)
     when 'credit'
-      amount = inputs[2]
-      credit_card(find_card_by_name(name), amount)
+      amount = inputs[3]
+      credit_card(find_card_by_name_and_type(name, type), amount)
     end
   end
 
   def print_cards
-    cards.sort_by(&:name).each { |card| print_card(card) }
+    cards.sort.each do |name, card_types|
+      types = card_types.sort.collect { |card_type, card| "(#{card_type}): #{card.balance_detail}" }.join(', ')
+      puts "#{name}: #{types}"
+    end
   end
 
   def print_card(card)
@@ -42,10 +46,11 @@ class CardsManager
 
   private
 
-  def add_card(name, number, limit)
-    card = Card.new(name: name, number: number, limit: limit)
+  def add_card(name, type, number, limit)
+    card = Card.new(name: name, type: type, number: number, limit: limit)
     card.valid?
-    @cards << card
+    @cards[name] ||= {}
+    @cards[name][type] = card
   end
 
   def charge_card(card, amount)
@@ -56,9 +61,9 @@ class CardsManager
     card.credit(amount)
   end
 
-  def find_card_by_name(name)
-    card = @cards.detect { |c| c.name.downcase == name.downcase }
-    raise ArgumentError, "** Card not found by name: #{name}" if card.nil?
+  def find_card_by_name_and_type(name, type)
+    card = @cards.dig(name, type)
+    raise ArgumentError, "** Card not found by name: #{name}, and type: #{type}" if card.nil?
 
     card
   end

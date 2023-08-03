@@ -4,10 +4,11 @@ require_relative '../lib/card_number_validator'
 
 # class: Card
 class Card
-  attr_reader :name, :number, :limit, :balance, :error_messages
+  attr_reader :name, :type, :number, :limit, :balance, :error_messages
 
   def initialize(args)
     @name = args[:name].capitalize if args[:name]
+    @type = args[:type]
     @number = args[:number]
     @limit = args[:limit].to_s.gsub('$', '').to_f if args[:limit]
     @balance = 0
@@ -20,6 +21,10 @@ class Card
 
   def to_s
     "#{name}: #{balance_detail}"
+  end
+
+  def type_description
+    "(#{type}): #{balance_detail}"
   end
 
   def balance_detail

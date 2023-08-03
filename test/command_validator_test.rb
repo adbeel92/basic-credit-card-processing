@@ -6,45 +6,45 @@ require_relative '../lib/command_validator'
 # Test validator
 class CommandValidatorTest < Minitest::Test
   def test_add_command
-    assert_equal(CommandValidator.filter_valid_command_lines('add Edu 12345 $1000.00').size, 1)
-    assert_equal(CommandValidator.filter_valid_command_lines('add Edu').size, 0)
+    assert_equal(CommandValidator.filter_valid_command_lines('add Edu type1 12345 $1000.00').size, 1)
+    assert_equal(CommandValidator.filter_valid_command_lines('add Edu type2').size, 0)
   end
 
   def test_add_command_multiple
-    command_lines = CommandValidator.filter_valid_command_lines("Add Tom 4111111111111111 $1000
-      Add Lisa 5454545454545454 $3000
-      Add Quincy 1234567890123456 $2000
+    command_lines = CommandValidator.filter_valid_command_lines("Add Tom type1 4111111111111111 $1000
+      Add Lisa type2 5454545454545454 $3000
+      Add Quincy type3 1234567890123456 $2000
       add
-      add Edu 12345
-      add Edu 12345 $1000 testing")
+      add Edu type1 12345
+      add Edu type2 12345 $1000 testing")
     assert_equal(command_lines.size, 3)
   end
 
   def test_charge_command
-    assert_equal(CommandValidator.filter_valid_command_lines('charge Edu $300').size, 1)
+    assert_equal(CommandValidator.filter_valid_command_lines('charge Edu type1 $300').size, 1)
     assert_equal(CommandValidator.filter_valid_command_lines('Charge Edu').size, 0)
   end
 
   def test_charge_command_multiple
-    command_lines = CommandValidator.filter_valid_command_lines("charge Edu $300
-      Charge  Edu  $300
+    command_lines = CommandValidator.filter_valid_command_lines("charge Edu type1 $300
+      Charge  Edu  type2  $300
       charge
       charge Edu
-      charge Edu $300 testing")
+      charge Edu type3 $300 testing")
     assert_equal(command_lines.size, 2)
   end
 
   def test_credit_command
-    assert_equal(CommandValidator.filter_valid_command_lines('credit Edu $150').size, 1)
+    assert_equal(CommandValidator.filter_valid_command_lines('credit Edu type1 $150').size, 1)
     assert_equal(CommandValidator.filter_valid_command_lines('Credit Edu').size, 0)
   end
 
   def test_credit_command_multiple
-    command_lines = CommandValidator.filter_valid_command_lines("credit Edu $150
-      Credit  Edu  $150
+    command_lines = CommandValidator.filter_valid_command_lines("credit Edu type1 $150
+      Credit  Edu  type2  $150
       credit
       credit Edu
-      credit Edu $150 testing")
+      credit Edu type3 $150 testing")
     assert_equal(command_lines.size, 2)
   end
 

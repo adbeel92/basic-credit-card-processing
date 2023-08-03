@@ -7,5 +7,8 @@ Security/Eval:
   Exclude:
     - main.rb
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/MethodLength:
-  Max: 15
+  Max: 16

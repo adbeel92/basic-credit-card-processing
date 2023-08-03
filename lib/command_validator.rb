@@ -2,7 +2,7 @@
 
 # Class: CommandValidator
 class CommandValidator
-  ALLOWED_PARAMETER_ACTIONS = { 'add' => 4, 'charge' => 3, 'credit' => 3 }.freeze
+  ALLOWED_PARAMETER_ACTIONS = { 'add' => 5, 'charge' => 4, 'credit' => 4 }.freeze
 
   class << self
     def filter_valid_command_lines(command)
